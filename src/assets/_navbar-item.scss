@@ -1,0 +1,39 @@
+// navbar logo
+
+.logo {
+  width: 121px;
+  height: 35px;
+  background-image: url("~@/assets/images/logo-sm.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  @include media-breakpoint-up(md) {
+    width: 174px;
+    height: 50px;
+    background-image: url("~@/assets/images/logo-lg.png");
+  }
+}
+
+// navbar cart dropdown
+
+.cart {
+  position: relative;
+  .cart-badge {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+  }
+  .cart-product-wrap {
+    min-width: 250px;
+    max-width: 300px;
+    .cart-product {
+      border-bottom: 1px solid $gray-400;
+      .product-price {
+        width: 200px;
+      }
+      .cart-product-img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}

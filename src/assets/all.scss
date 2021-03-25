@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/functions";
+@import "./helpers/_variables";
+@import "~bootstrap/scss/bootstrap";
+@import "custom";
+
+.sticky-navbar {
+  position: static;
+  @include media-breakpoint-up(md) {
+    position: sticky;
+    top: 0px;
+    z-index: 1020;
+  }
+}

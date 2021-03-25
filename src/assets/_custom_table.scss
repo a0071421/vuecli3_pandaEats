@@ -1,0 +1,40 @@
+// custom table
+.custom-table-width {
+  overflow: auto;
+  .custom-table {
+    table-layout: fixed; // 表格和欄寬將根據所給定的寬度來顯示（預設等寬）
+    min-width: 500px; // 避免因寬度不足而字疊在一起
+    @include media-breakpoint-up(md) {
+      min-width: 650px; // 避免因寬度不足而字疊在一起
+    }
+  }
+
+  .custom-table-thead th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    box-shadow: $table-border-width 0 0 0 $table-border-color;
+  }
+
+  .custom-table-tbody td:first-child {
+    border-right: $table-border-width solid $table-border-color;
+    box-shadow: $table-border-width 0 0 0 $table-border-color;
+  }
+
+  .custom-table-tbody td:first-child,
+  .custom-table-thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+  }
+
+  .custom-table-thead th:first-child {
+    z-index: 2;
+  }
+
+  .custom-table-tbody td {
+    word-wrap: break-word;
+  }
+}

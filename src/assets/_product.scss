@@ -1,0 +1,42 @@
+// products
+
+.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  button,
+  a {
+    cursor: not-allowed;
+  }
+}
+
+.product {
+  cursor: pointer;
+}
+
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  &:hover {
+    box-shadow: 0px 10px 24px theme-color("secondary");
+  }
+}
+
+// btn cart
+.btn-cart {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+}
+
+// like icon
+
+.like-icon {
+  color: color("pink");
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  &:hover {
+    $level: abs(-5);
+    color: mix(#fff, color("pink"), $level * $theme-color-interval);
+  }
+}

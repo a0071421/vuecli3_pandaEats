@@ -1,0 +1,78 @@
+// icon
+
+.icon {
+  margin-right: 4px;
+  color: theme-color("highlight");
+  &::before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+  }
+}
+
+// main
+
+.main {
+  transition: all 0.3s;
+}
+
+/*
+ * Sidebar
+ */
+
+.logout {
+  text-align: right;
+  position: absolute;
+  bottom: 0px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 76px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  transform: translateX(-200px);
+
+  @include media-breakpoint-up(md) {
+    transform: translateX(0px);
+  }
+  @include media-breakpoint-down(sm) {
+    width: 150px;
+  }
+
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 76px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+  .nav-link {
+    font-weight: $font-weight-bold;
+  }
+
+  .nav-link.active {
+    color: #007bff;
+  }
+
+  .sidebar-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+}
+
+// show menu
+
+.show .sidebar {
+  transform: translateX(0px);
+}
+
+.show .main {
+  transform: translateX(160px);
+}

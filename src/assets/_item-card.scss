@@ -1,0 +1,20 @@
+// item-card
+
+.item-card {
+  .item-card-img {
+    height: 250px;
+  }
+
+  .item-card-img.rounded-circle {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+  }
+
+  .item-card-body {
+    text-align: center;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,26 @@
+// category list
+
+.category {
+  list-style-type: none;
+  padding: 0px;
+  text-align: center;
+  font-size: $font-size-lg;
+  .category-group:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  .category-group {
+    .category-group-item {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border: 1px solid theme-color-level("primary", -3);
+      box-shadow: 1px 1px 2px theme-color-level("primary", -3);
+      border-radius: 10px;
+      &:hover,
+      &.active {
+        color: theme-color("light");
+        background-color: theme-color-level("primary", -3);
+      }
+    }
+  }
+}
