@@ -106,7 +106,6 @@ export default {
     return {
       isLoading: false,
       favoritePds: [],
-      specifiedProduct: {},
       pagination: {},
       status: {
         loadingItem: '',

@@ -4,7 +4,6 @@
     <div v-if="products.length === 0 && !isLoading" class="text-center">
       <h3 class="py-4">目前尚無產品哦</h3>
     </div>
-
     <div class="row">
       <div class="col-md-3">
         <div class="sticky-navbar">
@@ -136,7 +135,7 @@
                   <button
                     type="button"
                     class="btn btn-cart btn-outline-primary d-flex justify-content-center align-items-center"
-                    @click.stop="addtoCart(item.id)"
+                    @click.stop="addtoCart(item)"
                     :disabled="item.category === '即將上市'"
                   >
                     <i
@@ -191,19 +190,16 @@ export default {
   data () {
     return {
       isLoading: false,
-      allProducts: [],
-      products: [],
-      filterProducts: [],
-      specifiedProduct: {},
+      allProducts: [], // 所有產品
+      products: [], // 此分頁產品
+      filterProducts: [], // 篩選產品
       pagination: {},
       status: {
         loadingItem: '',
         addtoCart: ''
       },
-      carts: {
-        carts: {}
-      },
-      favoritePds: [],
+      localStorageCarts: JSON.parse(localStorage.getItem('tempCarts')) || [], // 暫存之購物車
+      favoritePds: JSON.parse(localStorage.getItem('favorite')) || [],
       search: ''
     }
   },
@@ -226,7 +222,32 @@ export default {
     getSpecifiedProduct (id) {
       this.$router.push(`/product/${id}`).catch(() => {})
     },
-    addtoCart (id, qty = 1) {
+
+    addtoCart (product) {
+      // 判斷目前欲加入的商品是否存在localStorage的暫存購物車內
+      // 使用findIndex判斷，若為-1為不存在->新增至localStorage
+      // 反之則更新該商品在localStorage的qty
+      const idIndex = this.localStorageCarts.findIndex(data => data.product_id === product.id)
+      if (idIndex === -1) {
+        const cartContent = {
+          product_id: product.id, // 產品 ID
+          qty: 1, // 產品數量，預設一筆
+          title: product.title, // 產品標題
+          imageUrl: product.imageUrl, // 產品圖片
+          origin_price: product.origin_price, // 產品原始金額
+          price: product.price, // 產品銷售金額,
+          total: product.price * 1, // 總計(折扣前)
+          final_total: product.price * 1 // 總計(折扣後)
+        }
+        this.localStorageCarts.push(cartContent)
+      } else {
+        this.localStorageCarts[idIndex].qty++
+      }
+      localStorage.setItem('tempCarts', JSON.stringify(this.localStorageCarts))
+      this.$bus.$emit('updateCarts')
+    },
+
+    /* addtoCart (id, qty = 1) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       vm.status.addtoCart = id
@@ -249,18 +270,7 @@ export default {
         vm.$bus.$emit('message:push', `已將 ${title} 加入購物車`, 'success')
         vm.getCarts()
       })
-    },
-    getCarts () {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.isLoading = true
-      vm.$http.get(api).then(response => {
-        vm.carts = response.data.data
-        vm.$bus.$emit('updateCarts', vm.carts)
-        vm.isLoading = false
-        vm.status.addtoCart = ''
-      })
-    },
+    }, */
     removeCart (id) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
@@ -306,11 +316,10 @@ export default {
   },
 
   created () {
-    this.getProducts()
-    this.getCarts()
-    this.favoritePds = JSON.parse(localStorage.getItem('favorite')) || []
-    this.$bus.$on('updateCarts', carts => {
-      this.carts = carts
+    const vm = this
+    vm.getProducts()
+    vm.$bus.$on('updateCarts', () => {
+      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || []
     })
   },
   components: {

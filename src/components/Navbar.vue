@@ -26,13 +26,13 @@
       >
         <i class="fas fa-cart-arrow-down fa-lg"></i>
         <span
-          v-if="carts.carts.length !== 0"
+          v-if="carts.length !== 0"
           class="cart-badge badge badge-pill badge-danger"
-          >{{ carts.carts.length }}</span
+          >{{ carts.length }}</span
         >
       </button>
-      <div class="dropdown-menu dropdown-menu-right" @click.prevent="">
-        <div v-if="carts.carts.length !== 0" class="cart-product-wrap">
+      <div class="dropdown-menu dropdown-menu-right" @click.stop="">
+        <div v-if="carts.length !== 0" class="cart-product-wrap">
           <div class="mx-2 text-right">
             <button
               @click="removeCart()"
@@ -45,7 +45,7 @@
 
           <div
             class="cart-product d-flex m-1 p-2"
-            v-for="item in carts.carts"
+            v-for="item in carts"
             :key="item.id"
           >
             <router-link :to="'/product/' + item.product_id">
@@ -53,19 +53,19 @@
                 v-if="Object.keys(carts).length != 0"
                 class="cart-product-img bg-cover"
                 :style="{
-                  backgroundImage: `url(${item.product.imageUrl})`
+                  backgroundImage: `url(${item.imageUrl})`
                 }"
               ></div
             ></router-link>
 
             <div class="product-price ml-2 px-2">
               <h5 class="text-truncate product-title">
-                {{ item.product.title }}
+                {{ item.title }}
               </h5>
 
               <div class="clearfix">
                 <span>{{ item.qty }} x </span>
-                <span>NT{{ item.product.price | currency }}</span>
+                <span>NT{{ item.price | currency }}</span>
                 <div class="ml-3 float-right">
                   <span class="h6 text-highlight"
                     >NT{{ item.final_total | currency }}</span
@@ -84,7 +84,7 @@
           <div class="cart-total d-flex justify-content-between p-2">
             <span>總計</span
             ><span class="h5 text-highlight"
-              >NT{{ carts.final_total | currency }}</span
+              >NT{{ cart_total | currency }}</span
             >
           </div>
         </div>
@@ -95,7 +95,7 @@
 
         <div class="px-2">
           <router-link
-            v-if="carts.carts.length !== 0"
+            v-if="carts.length !== 0"
             class="btn btn-sm btn-primary btn-block"
             to="/checkout"
             >結帳去</router-link
@@ -141,15 +141,12 @@
 </template>
 
 <script>
-import $ from 'jquery'
 export default {
   data () {
     return {
       disable: false,
       isLoading: false,
-      carts: {
-        carts: {}
-      }
+      carts: JSON.parse(localStorage.getItem('tempCarts')) || []
     }
   },
   methods: {
@@ -162,13 +159,13 @@ export default {
         }
       })
     },
-    getCarts () {
+    /* getCarts () {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       vm.$http.get(api).then(response => {
         vm.carts = response.data.data
       })
-    },
+    }, */
     removeCart (id = '') {
       this.$bus.$emit('removeCarts', id)
     },
@@ -188,9 +185,8 @@ export default {
   },
   created () {
     const vm = this
-    vm.getCarts()
-    vm.$bus.$on('updateCarts', carts => {
-      vm.carts = carts
+    vm.$bus.$on('updateCarts', () => {
+      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || []
     })
     vm.enableDropdown()
   },
@@ -200,19 +196,10 @@ export default {
       this.enableDropdown()
     }
   },
-  mounted () {
-    $(document).ready(() => {
-      const dropdown = $('.dropdown')
-      dropdown.on('hide.bs.dropdown', (e) => {
-        if (e.clickEvent) {
-          // console.log($('#removeCartsModal').is(':visible'))
-          if (dropdown.has(e.clickEvent.target).length ||
-             ($('#removeCartsModal').is(':visible') && $('body').has(e.clickEvent.target).length)) {
-            e.preventDefault()
-          }
-        }
-      })
-    })
+  computed: {
+    cart_total () {
+      return this.carts.reduce((accumulator, currentValue) => accumulator + currentValue.final_total, 0)
+    }
   }
 }
 </script>

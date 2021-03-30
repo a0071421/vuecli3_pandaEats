@@ -53,7 +53,7 @@
             <button
               type="button"
               class="btn btn-outline-primary"
-              @click="addtoCart(product.id, product.num)"
+              @click="addtoCart(product, product.num)"
             >
               <i class="fas fa-cart-arrow-down"></i> 加到購物車
             </button>
@@ -78,7 +78,8 @@ export default {
       product: {},
       carts: {
         carts: []
-      }
+      },
+      localStorageCarts: JSON.parse(localStorage.getItem('tempCarts')) || []
     }
   },
   methods: {
@@ -93,7 +94,28 @@ export default {
         vm.isLoading = false
       })
     },
-    addtoCart (id, qty = 1) {
+    addtoCart (product, qty = 1) {
+      // 判斷目前欲加入的商品是否存在localStorage的暫存購物車內
+      // 使用findIndex判斷，若為-1為不存在->新增至localStorage
+      // 反之則更新該商品在localStorage的qty
+      const idIndex = this.localStorageCarts.findIndex(data => data.product_id === product.id)
+      if (idIndex === -1) {
+        const cartContent = {
+          product_id: product.id, // 產品 ID
+          qty: qty, // 產品數量，預設一筆
+          name: product.title, // 產品標題
+          origin_price: product.origin_price, // 產品原始金額
+          price: product.price, // 產品銷售金額
+          total: product.price * qty, // 總計(折扣前)
+          final_total: product.price * qty // 總計(折扣後)
+        }
+        this.localStorageCarts.push(cartContent)
+      } else {
+        this.localStorageCarts[idIndex].qty += qty
+      }
+      localStorage.setItem('tempCarts', JSON.stringify(this.localStorageCarts))
+    },
+    /*  addtoCart (id, qty = 1) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       vm.isLoading = true
@@ -119,7 +141,7 @@ export default {
         )
         vm.getCarts()
       })
-    },
+    }, */
     removeCart (id) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
@@ -134,16 +156,17 @@ export default {
       vm.isLoading = true
       vm.$http.get(api).then(response => {
         vm.carts = response.data.data
-        vm.$bus.$emit('updateCarts', vm.carts)
+        vm.$bus.$emit('updateCarts')
         vm.isLoading = false
       })
     }
   },
   created () {
-    this.getCarts()
-    this.getProduct()
-    this.$bus.$on('updateCarts', carts => {
-      this.carts = carts
+    const vm = this
+    vm.getCarts()
+    vm.getProduct()
+    vm.$bus.$on('updateCarts', () => {
+      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || []
     })
   }
 }

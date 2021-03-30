@@ -8,7 +8,7 @@
       tabindex="-1"
       role="dialog"
       aria-labelledby="removeCartsModal"
-      aria-hidden="true"
+      aria-hidden="true" @click.stop=""
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -113,11 +113,11 @@ export default {
   },
   created () {
     const vm = this
-    vm.getCarts()
     vm.$bus.$on('updateCarts', carts => {
       vm.carts = carts
     })
     vm.$bus.$on('removeCarts', id => {
+      vm.getCarts()
       vm.id = id
       if (id !== '') {
         vm.removeOne = true
