@@ -1,12 +1,13 @@
 <template>
   <div>
     <Banner />
+    <Coupons />
     <section class="section reserve bg-cover">
       <div class="container">
         <div class="row">
           <div class="col-lg-7">
-            <div class="reserve-form bg-dark">
-              <h3 class="section-subtitle text-success">Reserve Now</h3>
+            <div class="reserve-form bg-primary">
+              <h3 class="section-subtitle text-highlight">Reserve Now</h3>
               <h2 class="section-title text-white">
                 飲食，是決定一切的關鍵<br />吃得對，比吃得多還要重要!!
               </h2>
@@ -41,9 +42,78 @@
                 </div>
                 <router-link
                   to="/products"
-                  class="btn btn-lg btn-outline-success"
+                  class="btn btn-lg btn-outline-highlight"
                   >立即下訂</router-link
                 >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section special container">
+      <div class="container-fluid">
+        <div class="title m-3 text-center">
+          <h3 class="section-subtitle text-highlight">Special meal</h3>
+          <h2 class="section-title text-primary">熱門餐點</h2>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-md-4 mb-5">
+            <div class="item-card">
+              <div
+                class="bg-cover item-card-img rounded"
+                style="background-image:url('https://images.unsplash.com/photo-1583549323543-7ae855a78d6d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"
+              ></div>
+              <div class="item-card-body">
+                <h3 class="item-card-title text-highlight">炙焰犇放牛排餐</h3>
+                <p class="item-card-text">
+                  選用上等油花均勻的牛上肩，搭配季節考時蔬，每一口都在挑戰您的味蕾
+                </p>
+                <router-link
+                  to="/product/-MRZqZsG__WjmLksrXme"
+                  class="btn btn-outline-primary btn-sm"
+                  >了解更多
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-5">
+            <div class="item-card">
+              <div
+                class="bg-cover item-card-img rounded"
+                style="background-image:url('https://images.unsplash.com/photo-1581512798638-ebd32054b3b9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1311&q=80')"
+              ></div>
+              <div class="item-card-body">
+                <h3 class="item-card-title text-highlight">力爭上游烤鮭魚</h3>
+                <p class="item-card-text">
+                  愛吃魚的您絕對不能錯過鮭魚，富含豐富的OMEGA-3，最簡單的調味，卻能帶給您最不平凡的美味
+                </p>
+                <router-link
+                  to="/product/-MRZy8xAJwxhkEBpd6Om"
+                  class="btn btn-outline-primary btn-sm"
+                  >了解更多
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-5">
+            <div class="item-card">
+              <div
+                class="bg-cover item-card-img rounded"
+                style="background-image:url('https://images.unsplash.com/photo-1579619168313-d2e074a7ee02?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80')"
+              ></div>
+              <div class="item-card-body">
+                <h3 class="item-card-title text-highlight">
+                  絕不是美豬之菲力豬
+                </h3>
+                <p class="item-card-text">
+                  本店絕不使用美豬，確保您我的健康，採用台灣溫體豬，香煎之恰到好處，絕對給您滿滿的驚喜
+                </p>
+                <router-link
+                  to="/product/-MRZyMQ4OQFSrf70yoqv"
+                  class="btn btn-outline-primary btn-sm"
+                  >了解更多
+                </router-link>
               </div>
             </div>
           </div>
@@ -53,13 +123,13 @@
     <section class="section py-3 bg-opacity position-relative">
       <div class="container">
         <div class="title m-3 text-center">
-          <h3 class="section-subtitle text-success">Special secret</h3>
+          <h3 class="section-subtitle text-highlight">Special secret</h3>
           <h2 class="section-title text-primary">
             客人總是在詢問<br />這麼好吃的秘訣是什麼
           </h2>
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-3">
           <div class="col-md-4">
             <div class="item-card">
               <div
@@ -108,71 +178,25 @@
         </div>
       </div>
     </section>
-    <section class="section my-3 special container">
-      <div class="container-fluid">
-        <div class="title m-3 text-center">
-          <h3 class="section-subtitle text-success">Special meal</h3>
-          <h2 class="section-title text-primary">特色餐點</h2>
-        </div>
-        <div class="row justify-content-center mt-5">
-          <div class="col-md-4 mb-5">
-            <div class="item-card">
-              <div
-                class="bg-cover item-card-img rounded"
-                style="background-image:url('https://images.unsplash.com/photo-1583549323543-7ae855a78d6d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"
-              ></div>
-              <div class="item-card-body">
-                <h3 class="item-card-title text-highlight">炙焰犇放牛排餐</h3>
-                <p class="item-card-text">
-                  選用上等油花均勻的牛上肩，搭配季節考時蔬，每一口都在挑戰您的味蕾
-                </p>
-                <router-link
-                  to="/products"
-                  class="btn btn-success btn-sm"
-                  >了解更多
-                </router-link>
-              </div>
-            </div>
+    <section class="section bg-primary subscribe py-4">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-5 d-flex align-items-center justify-content-start">
+            <span class="text-white h5 mx-2 mb-0">訂閱你我的健康郵件</span>
           </div>
-          <div class="col-md-4 mb-5">
-            <div class="item-card">
-              <div
-                class="bg-cover item-card-img rounded"
-                style="background-image:url('https://images.unsplash.com/photo-1581512798638-ebd32054b3b9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1311&q=80')"
-              ></div>
-              <div class="item-card-body">
-                <h3 class="item-card-title text-highlight">力爭上游烤鮭魚</h3>
-                <p class="item-card-text">
-                  愛吃魚的您絕對不能錯過鮭魚，富含豐富的OMEGA-3，最簡單的調味，卻能帶給您最不平凡的美味
-                </p>
-                <router-link
-                  to="/products"
-                  class="btn btn-success btn-sm"
-                  >了解更多
-                </router-link>
+          <div class="col-md-5 my-3 my-md-0">
+            <form class="form" @submit.prevent="$bus.$emit('message:push', `訂閱成功`, 'success')">
+              <div class="form-square form-square-icon d-flex bg-white">
+                <label for="subscribe" class="form-icon">
+                  <i class="fas fa-envelope fa-lg"></i>
+                </label>
+                <input type="email" id="subscribe" class="w-100 form-input" placeholder="請輸入電子郵件*" required>
+                <button class="btn btn-highlight btn-lg rounded-0">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
               </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-5">
-            <div class="item-card">
-              <div
-                class="bg-cover item-card-img rounded"
-                style="background-image:url('https://images.unsplash.com/photo-1579619168313-d2e074a7ee02?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80')"
-              ></div>
-              <div class="item-card-body">
-                <h3 class="item-card-title text-highlight">
-                  絕不是美豬之菲力豬
-                </h3>
-                <p class="item-card-text">
-                  本店絕不使用美豬，確保您我的健康，採用台灣溫體豬，香煎之恰到好處，絕對給您滿滿的驚喜
-                </p>
-                <router-link
-                  to="/products"
-                  class="btn btn-success btn-sm"
-                  >了解更多
-                </router-link>
-              </div>
-            </div>
+
+            </form>
           </div>
         </div>
       </div>
@@ -182,9 +206,11 @@
 
 <script>
 import Banner from '@/components/Banner.vue'
+import Coupons from '@/views/customer/Coupons.vue'
 export default {
   components: {
-    Banner
+    Banner,
+    Coupons
   }
 }
 </script>

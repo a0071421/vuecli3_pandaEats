@@ -1,14 +1,5 @@
 // products
 
-.disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  button,
-  a {
-    cursor: not-allowed;
-  }
-}
-
 .product {
   cursor: pointer;
 }
@@ -20,6 +11,19 @@
   }
 }
 
+.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.not-allowed {
+  cursor: not-allowed;
+  button,
+  a {
+    cursor: not-allowed;
+  }
+}
+
 // btn cart
 .btn-cart {
   border-radius: 50%;
@@ -27,16 +31,23 @@
   width: 45px;
 }
 
-// like icon
+// faq
 
-.like-icon {
-  color: color("pink");
-  cursor: pointer;
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  &:hover {
-    $level: abs(-5);
-    color: mix(#fff, color("pink"), $level * $theme-color-interval);
+.FAQ-item {
+  margin-bottom: 1rem;
+  .FAQ-title {
+    display: block;
+    text-decoration: none;
+    border: 1px solid $primary;
+    color: $primary;
+    background: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+  }
+  .FAQ-body {
+    padding: 15px;
   }
 }

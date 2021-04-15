@@ -7,7 +7,7 @@
   position: static;
   @include media-breakpoint-up(md) {
     position: sticky;
-    top: 0px;
+    top: 20px;
     z-index: 1020;
   }
 }

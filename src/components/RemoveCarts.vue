@@ -13,7 +13,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title" id="">刪除商品</h5>
+            <h5 class="modal-title">刪除商品</h5>
             <button
               type="button"
               class="close"
@@ -27,11 +27,11 @@
             <div v-if="removeOne">
               確認要刪除
               <strong class="h4 text-highlight word-wrap-break">{{
-                removePd.product.title
+                removePd.title
               }}</strong>
               嗎?(刪除後將無法恢復)
             </div>
-            <div v-if="!removeOne">
+            <div v-else>
               確認要刪除<strong class="h4 text-highlight">所有商品</strong
               >嗎?(刪除後將無法恢復)
             </div>
@@ -64,18 +64,35 @@ export default {
   data () {
     return {
       isLoading: false,
-      carts: {
-        carts: {}
-      },
-      removePd: {
-        product: {}
-      },
+      carts: JSON.parse(localStorage.getItem('tempCarts')) || { carts: [], total: 0, finalTotal: 0 }, // 暫存之購物車
+      removePd: {},
       removeOne: false,
       id: ''
     }
   },
   methods: {
-    removeCart (id = '') {
+    removeCart () {
+      const vm = this
+      vm.isLoading = true
+      // 刪除全部購物車內容
+      $('#removeCartsModal').modal('hide')
+      if (!vm.id) {
+        localStorage.removeItem('tempCarts')
+        vm.$bus.$emit('message:push', '已清空購物車')
+      } else { // 刪除購物車特定商品，並更新購物車total以及finalToal
+        const delIndex = vm.carts.carts.findIndex(item => item.id === vm.id)
+        const delTitle = vm.carts.carts[delIndex].title
+        const pdTotal = vm.carts.carts[delIndex].price * vm.carts.carts[delIndex].qty
+        vm.carts.total -= pdTotal
+        vm.carts.finalTotal -= 'coupon' in vm.carts ? Math.floor(pdTotal * vm.carts.coupon.percent) : pdTotal
+        vm.carts.carts.splice(delIndex, 1)
+        vm.$bus.$emit('message:push', `已將 ${delTitle} 於購物車刪除`, 'success')
+        localStorage.setItem('tempCarts', JSON.stringify(vm.carts))
+      }
+      vm.$bus.$emit('updateCarts')
+      vm.isLoading = false
+    }
+    /* removeCart (id = '') {
       const vm = this
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
       vm.isLoading = true
@@ -100,24 +117,14 @@ export default {
           vm.getCarts()
         })
       }
-    },
-    getCarts () {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.$http.get(api).then(response => {
-        vm.carts = response.data.data
-        vm.$bus.$emit('updateCarts', vm.carts)
-        vm.isLoading = false
-      })
-    }
+    } */
   },
   created () {
     const vm = this
-    vm.$bus.$on('updateCarts', carts => {
-      vm.carts = carts
+    vm.$bus.$on('updateCarts', () => {
+      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || { carts: [], total: 0, finalTotal: 0 } // 暫存之購物車
     })
     vm.$bus.$on('removeCarts', id => {
-      vm.getCarts()
       vm.id = id
       if (id !== '') {
         vm.removeOne = true

@@ -151,7 +151,7 @@
                           type="text"
                           class="form-control"
                           id="category"
-                          placeholder="請輸入分類"
+                          placeholder="請輸入分類" required
                         />
                       </div>
                       <div class="form-group col-md-6">
@@ -161,7 +161,7 @@
                           type="text"
                           class="form-control"
                           id="unit"
-                          placeholder="請輸入單位"
+                          placeholder="請輸入單位" required
                         />
                       </div>
                     </div>
@@ -183,7 +183,7 @@
                           type="number"
                           class="form-control"
                           id="price"
-                          placeholder="請輸入售價"
+                          placeholder="請輸入售價" required
                         />
                       </div>
                     </div>
@@ -215,7 +215,7 @@
                         :true-value="1"
                         :false-value="0"
                         class="form-check-input"
-                        id="is_enabled"
+                        id="is_enabled" required
                       />
                       <label class="form-check-label" for="is_enabled"
                         >是否啟用</label
@@ -345,11 +345,11 @@ export default {
     },
     updateProduct () {
       const vm = this
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.eUSTOMPATH}/admin/product`
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`
       let httpMethod = 'post'
       vm.isLoading = true
       if (vm.option === 'edit') {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.eUSTOMPATH}/admin/product/${vm.tempProduct.id}`
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`
         httpMethod = 'put'
       } // if
 
@@ -367,6 +367,7 @@ export default {
         } else {
           vm.$bus.$emit('message:push', '新增失敗', 'danger')
         }
+        vm.isLoading = false
       })
     },
     openModal (option, item) {
@@ -386,11 +387,11 @@ export default {
 
     deleteProduct () {
       const vm = this
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.eUSTOMPATH}/admin/product/${vm.tempProduct.id}`
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`
       vm.isLoading = true
       if (vm.option === 'deleteAll') {
         vm.products.forEach((item, index) => {
-          api = `${process.env.VUE_APP_APIPATH}/api/${process.env.eUSTOMPATH}/admin/product/${item.id}`
+          api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${item.id}`
           vm.$http.delete(api).then(response => {
             $('#delProductModal').modal('hide')
             if (response.data.success) {
@@ -422,7 +423,7 @@ export default {
       vm.status.fileUploading = true
       $('#confirm').attr('disabled', true)
       formData.append('file-to-upload', data)
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.eUSTOMPATH}/admin/upload`
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`
       vm.$http
         .post(url, formData, {
           header: {

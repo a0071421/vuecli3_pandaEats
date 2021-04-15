@@ -64,3 +64,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// sticky footer
+
+.vHeight {
+  min-height: calc(100vh - 100px);
+}

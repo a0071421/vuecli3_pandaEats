@@ -1,5 +1,5 @@
 <template>
-  <footer class="my-3 fixed-footer">
+  <footer class="footer pb-3">
     <div class="container">
       <ul class="d-flex list-unstyle justify-content-center">
         <li class="list-unstyle-item">

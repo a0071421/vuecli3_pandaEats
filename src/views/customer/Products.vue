@@ -80,7 +80,7 @@
           <div
             class="col-lg-4 col-md-6 col-sm-6 mb-4"
             v-for="item in filterProducts"
-            :key="item.id"
+            :key="item.id" :class="{'not-allowed': item.category === '即將上市'}"
           >
             <div
               :class="{
@@ -88,19 +88,10 @@
                 disabled: item.category === '即將上市'
               }"
               class="card border-0 h-100 position-relative text-decoration-none"
-              @click.prevent="
+              @click="
                 item.category !== '即將上市' && getSpecifiedProduct(item.id)
               "
             >
-              <div>
-                <a class="like-icon empty" href="#" v-if="!isFavorite(item.id)" @click.prevent.stop="addFavorite(item)">
-                  <i class="far fa-heart fa-lg"></i>
-                </a>
-                <a class="like-icon full" href="#" v-if="isFavorite(item.id)" @click.prevent.stop="removeFavorite(item)">
-                  <i class="fas fa-heart fa-lg"></i>
-                </a>
-              </div>
-
               <div
                 class="rounded-top bg-cover"
                 style="height: 150px;"
@@ -108,10 +99,19 @@
               ></div>
 
               <div class="card-body">
-                <span class="badge badge-highlight text-white">{{
-                  item.category
-                }}</span>
-                <!-- <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span> -->
+                <div class="d-flex justify-content-between">
+                  <span class="badge badge-highlight text-white">{{
+                    item.category }}
+                    </span>
+                  <div>
+                    <a class="like-icon empty" href="#" v-if="!isFavorite(item.id)" @click.prevent.stop="addFavorite(item)">
+                      <i class="far fa-heart fa-lg"></i>
+                    </a>
+                    <a class="like-icon full" href="#" v-if="isFavorite(item.id)" @click.prevent.stop="removeFavorite(item)">
+                      <i class="fas fa-heart fa-lg"></i>
+                    </a>
+                  </div>
+                </div>
                 <h5 class="card-title font-weight-bold text-ellipsis">
                   <a href="#">{{ item.title }}</a>
                 </h5>
@@ -120,8 +120,8 @@
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="price">
-                    <div v-if="!item.price" class="h5 text-highlight">
-                      NT{{ item.origin_price | currency }} 元
+                    <div v-if="!item.origin_price" class="h5 text-highlight">
+                      NT{{ item.price | currency }} 元
                     </div>
                     <div v-else>
                       <del class="h6"
@@ -198,7 +198,7 @@ export default {
         loadingItem: '',
         addtoCart: ''
       },
-      localStorageCarts: JSON.parse(localStorage.getItem('tempCarts')) || [], // 暫存之購物車
+      carts: JSON.parse(localStorage.getItem('tempCarts')) || { carts: [], total: 0, finalTotal: 0 }, // 暫存之購物車
       favoritePds: JSON.parse(localStorage.getItem('favorite')) || [],
       search: ''
     }
@@ -224,27 +224,36 @@ export default {
     },
 
     addtoCart (product) {
+      const vm = this
+      vm.isLoading = false
+      vm.status.addtoCart = product.id
       // 判斷目前欲加入的商品是否存在localStorage的暫存購物車內
-      // 使用findIndex判斷，若為-1為不存在->新增至localStorage
-      // 反之則更新該商品在localStorage的qty
-      const idIndex = this.localStorageCarts.findIndex(data => data.product_id === product.id)
+      // 使用findIndex判斷，若為-1為不存在->新增至localStorage，並更新購物車total以及finalToal
+      // 反之則更新該商品在localStorage的qty，並更新購物車total以及finalToal
+      const idIndex = vm.carts.carts.findIndex(data => data.id === product.id)
       if (idIndex === -1) {
         const cartContent = {
-          product_id: product.id, // 產品 ID
+          id: product.id, // 產品 ID
           qty: 1, // 產品數量，預設一筆
           title: product.title, // 產品標題
           imageUrl: product.imageUrl, // 產品圖片
-          origin_price: product.origin_price, // 產品原始金額
-          price: product.price, // 產品銷售金額,
-          total: product.price * 1, // 總計(折扣前)
-          final_total: product.price * 1 // 總計(折扣後)
+          unit: product.unit, // 產品單位
+          origin_price: product.origin_price === '' ? Number(product.price) : product.origin_price, // 產品原始金額
+          price: Number(product.price) // 產品銷售金額
         }
-        this.localStorageCarts.push(cartContent)
+        vm.carts.carts.push(cartContent)
       } else {
-        this.localStorageCarts[idIndex].qty++
+        vm.carts.carts[idIndex].qty++
+        vm.carts.carts[idIndex].total += Number(product.price)
       }
-      localStorage.setItem('tempCarts', JSON.stringify(this.localStorageCarts))
-      this.$bus.$emit('updateCarts')
+      vm.carts.total += Number(product.price)
+      vm.carts.finalTotal += 'coupon' in vm.carts ? Math.floor(Number(product.price) * vm.carts.coupon.percent) : Number(product.price)
+      localStorage.setItem('tempCarts', JSON.stringify(vm.carts))
+      const title = vm.filterProducts.find(item => item.id === product.id).title
+      vm.$bus.$emit('message:push', `已將 ${title} 加入購物車`, 'success')
+      vm.$bus.$emit('updateCarts')
+      vm.isLoading = false
+      vm.status.addtoCart = ''
     },
 
     /* addtoCart (id, qty = 1) {
@@ -284,11 +293,13 @@ export default {
       const vm = this
       vm.favoritePds.push(product)
       localStorage.setItem('favorite', JSON.stringify(vm.favoritePds))
+      vm.$bus.$emit('message:push', '已加入收藏', 'success')
     },
     removeFavorite (product) {
       const vm = this
       vm.favoritePds = vm.favoritePds.filter(item => item.id !== product.id)
       localStorage.setItem('favorite', JSON.stringify(vm.favoritePds))
+      vm.$bus.$emit('message:push', '已取消收藏', 'success')
     },
     isFavorite (id) {
       const vm = this
@@ -319,7 +330,7 @@ export default {
     const vm = this
     vm.getProducts()
     vm.$bus.$on('updateCarts', () => {
-      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || []
+      vm.carts = JSON.parse(localStorage.getItem('tempCarts')) || { carts: [], total: 0, finalTotal: 0 } // 暫存之購物車
     })
   },
   components: {

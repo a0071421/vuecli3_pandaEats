@@ -1,0 +1,47 @@
+// checkout step
+.step {
+  .step-item {
+    background-color: theme-color('light');
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: block;
+    }
+    &.active {
+      color: white;
+      background-color: theme-color('primary');
+      display: block;
+    }
+    &.finish {
+      color: white;
+      background-color: theme-color('success');
+      display: block;
+    }
+  }
+}
+
+// checkout-cart-table
+
+.checkout-cart-table {
+  table-layout: fixed;
+  width: 100%;
+  .cart-img {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+  }
+
+  .checkout-cart-thead .pdNumber {
+    width: 25%;
+    @include media-breakpoint-up(md) {
+      width: 15%;
+    }
+  }
+
+  .checkout-cart-tbody td:first-child button {
+    display: block;
+    margin: 0 auto;
+  }
+  .checkout-cart-tbody tr:last-child td {
+    border-bottom: $table-border-width solid $table-border-color;
+  }
+}

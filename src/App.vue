@@ -1,39 +1,25 @@
 <template>
   <div id="app">
     <Alert />
-    <router-view></router-view>
+    <router-view class="vHeight"></router-view>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Alert from './components/AlertMessage.vue'
+import Footer from '@/components/Footer.vue'
 export default {
   components: {
-    Alert
+    Alert,
+    Footer
   }
 }
 </script>
 
 <style lang="scss">
 @import "@/assets/all";
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html, body, #app {
+  height: 100%;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-} */
 </style>
