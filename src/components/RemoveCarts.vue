@@ -8,7 +8,7 @@
       tabindex="-1"
       role="dialog"
       aria-labelledby="removeCartsModal"
-      aria-hidden="true" @click.stop=""
+      aria-hidden="true" @click="clickHandler($event)"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -91,33 +91,10 @@ export default {
       }
       vm.$bus.$emit('updateCarts')
       vm.isLoading = false
+    },
+    clickHandler (e) {
+      e.stopPropagation()
     }
-    /* removeCart (id = '') {
-      const vm = this
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
-      vm.isLoading = true
-      $('#removeCartsModal').modal('hide')
-      if (id === '') {
-        // clear all
-
-        vm.carts.carts.forEach((item, index) => {
-          api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`
-          vm.$http.delete(api).then(response => {
-            if (index === vm.carts.carts.length - 1) {
-              vm.$bus.$emit('message:push', '已清空購物車')
-              vm.getCarts()
-            }
-          })
-        })
-      } else {
-        vm.$http.delete(api).then(response => {
-          const title = vm.carts.carts.find(item => item.id === id).product
-            .title
-          vm.$bus.$emit('message:push', `已將 ${title} 於購物車刪除`, 'danger')
-          vm.getCarts()
-        })
-      }
-    } */
   },
   created () {
     const vm = this

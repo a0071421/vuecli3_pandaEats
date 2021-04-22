@@ -308,7 +308,7 @@
               </div>
 
               <div class="d-flex flex-column flex-sm-row justify-content-between">
-                <button class="btn btn-primary mb-3 mb-sm-0" @click="current = 'cart-list'">
+                <button type="button" class="btn btn-primary mb-3 mb-sm-0" @click="current = 'cart-list'">
                   <i class="fas fa-arrow-left"></i> 回上一步
                 </button>
                 <button type="submit" class="btn btn-danger">
@@ -478,7 +478,6 @@ export default {
                     }
                     vm.$http.post(api, { data: { ...couponCode } }).then(response => {
                       if (response.data.success) {
-                        console.log('已加入優惠券' + response.data)
                         vm.createOrder()
                       }
                     })
@@ -496,7 +495,6 @@ export default {
       vm.isLoading = true
       const form = { ...vm.form }
       vm.$http.post(api, { data: { ...form } }).then((response) => {
-        console.log(response.data)
         if (response.data.success) {
           vm.$router.push(`/payment/${response.data.orderId}`)
         }

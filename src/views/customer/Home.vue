@@ -191,7 +191,7 @@
                   <i class="fas fa-envelope fa-lg"></i>
                 </label>
                 <input type="email" id="subscribe" class="w-100 form-input" placeholder="請輸入電子郵件*" required>
-                <button class="btn btn-highlight btn-lg rounded-0">
+                <button type="submit" class="btn btn-highlight btn-lg rounded-0">
                   <i class="fas fa-arrow-right"></i>
                 </button>
               </div>

@@ -30,7 +30,7 @@
             >{{ carts.carts.length }}</span
           >
         </button>
-        <div class="dropdown-menu dropdown-menu-right" @click.stop="">
+        <div class="dropdown-menu dropdown-menu-right" @click="clickHandler($event)">
           <div v-if="carts.carts.length !== 0" class="cart-product-wrap">
             <div class="mx-2 text-right">
               <button
@@ -161,13 +161,6 @@ export default {
         }
       })
     },
-    /* getCarts () {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.$http.get(api).then(response => {
-        vm.carts = response.data.data
-      })
-    }, */
     removeCart (id = '') {
       this.$bus.$emit('removeCarts', id)
     },
@@ -183,6 +176,9 @@ export default {
       } else {
         this.disable = false
       }
+    },
+    clickHandler (e) {
+      e.stopPropagation()
     }
   },
   created () {

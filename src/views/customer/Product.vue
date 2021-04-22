@@ -234,33 +234,6 @@ export default {
       vm.$bus.$emit('updateCarts')
       vm.isLoading = false
     },
-    /*  addtoCart (id, qty = 1) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.isLoading = true
-      const cart = {
-        product_id: id,
-        qty
-      }
-
-      // 新增之產品是否已在購物車內
-      const repeatedPd = vm.carts.carts.find(item => item.product_id === id)
-
-      // 新增之產品已在購物車內
-      if (typeof repeatedPd !== 'undefined') {
-        cart.qty += repeatedPd.qty
-        vm.removeCart(repeatedPd.id)
-      }
-
-      vm.$http.post(api, { data: { ...cart } }).then(response => {
-        vm.$bus.$emit(
-          'message:push',
-          `已將 ${vm.product.title} 加入購物車`,
-          'success'
-        )
-        vm.getCarts()
-      })
-    }, */
     removeCart (id) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
@@ -269,16 +242,6 @@ export default {
         vm.isLoading = false
       })
     }
-    /* getCarts () {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.isLoading = true
-      vm.$http.get(api).then(response => {
-        vm.carts = response.data.data
-        vm.$bus.$emit('updateCarts')
-        vm.isLoading = false
-      })
-    } */
   },
   created () {
     const vm = this

@@ -14,7 +14,6 @@ import 'bootstrap'
 
 import { ValidationObserver, ValidationProvider, extend, localize, configure } from 'vee-validate'
 import TW from 'vee-validate/dist/locale/zh_TW.json'
-// import * as rules from 'vee-validate/dist/rules';
 import { email, required, regex, max } from 'vee-validate/dist/rules'
 extend('email', {
   ...email,
@@ -53,17 +52,12 @@ new Vue({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    // const vm = this
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`
     axios.post(api).then(response => {
       if (response.data.success) {
         next()
       } else {
-        /*  vm.$bus.$emit('message:push', '請登入', 'danger')
-        next({
-          path: '/login'
-        }) */
-        next()
+        next({ path: '/login' })
       }
     })
   } else {

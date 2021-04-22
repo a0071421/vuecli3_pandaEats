@@ -89,8 +89,8 @@
         </tbody>
       </table>
       <div class="text-right">
-        <button
-          v-if="order.is_paid === false"
+        <button type="button"
+          v-if="!order.is_paid"
           class="btn btn-danger"
           @click="payOrder"
         >

@@ -91,7 +91,6 @@
                 class="form-control"
                 id="title"
                 v-model="temp_coupon.title"
-                aria-describedby=""
               />
             </div>
             <div class="form-group">
@@ -101,7 +100,6 @@
                 class="form-control"
                 id="code"
                 v-model="temp_coupon.code"
-                aria-describedby=""
               />
             </div>
             <div class="form-group">
@@ -111,7 +109,6 @@
                 class="form-control"
                 id="expired"
                 v-model="due_date"
-                aria-describedby=""
               />
             </div>
             <div class="form-group">
@@ -123,7 +120,6 @@
                 min="1"
                 max="100"
                 v-model="temp_coupon.percent"
-                aria-describedby=""
               />
             </div>
             <div class="form-group form-check">
@@ -235,17 +231,18 @@ export default {
   methods: {
     getCoupons (page = 1) {
       const vm = this
-      // vm.isLoading = true
+      vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`
       vm.$http.get(api).then(response => {
         if (response.data.success) {
           vm.coupons = response.data.coupons
-          vm.isLoading = false
+
           vm.pagination = response.data.pagination
         } else {
-          /* vm.$bus.$emit('message:push', '請登入', 'danger')
-          vm.$router.push('/login') */
+          vm.$bus.$emit('message:push', response.data.message, 'danger')
+          vm.$router.push('/login')
         }
+        vm.isLoading = false
       })
     },
     openModal (option, item) {

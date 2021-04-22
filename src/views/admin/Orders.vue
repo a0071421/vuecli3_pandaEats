@@ -49,16 +49,16 @@ export default {
     getOrders (page = 1) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
-      // vm.isLoading = true
+      vm.isLoading = true
       vm.$http.get(api).then(response => {
         if (response.data.success) {
-          vm.isLoading = false
           vm.orders = response.data.orders
           vm.pagination = response.data.pagination
         } else {
-          /* vm.$bus.$emit('message:push', '請登入', 'danger')
-          vm.$router.push('/login') */
+          vm.$bus.$emit('message:push', response.data.message, 'danger')
+          vm.$router.push('/login')
         }
+        vm.isLoading = false
       })
     }
   },

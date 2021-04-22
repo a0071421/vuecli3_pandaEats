@@ -20,14 +20,10 @@
         >
           <div
             class="product card border-0 h-100 position-relative text-decoration-none"
-            @click.prevent="getSpecifiedProduct(item.id)"
+            @click="getSpecifiedProduct(item.id)"
           >
-            <div
-              style="
-              height: 150px;
-              background-size: cover;
-              background-position: center;
-            "
+            <div class="bg-cover"
+              style="height: 150px;"
               :style="{ backgroundImage: `url(${item.imageUrl})` }"
             ></div>
 
@@ -96,12 +92,10 @@
         </div>
       </div>
     </div>
-    <!-- <Pagination :pagination-info="pagination" @changePage="" /> -->
   </div>
 </template>
 
 <script>
-// import Pagination from '@/components/Pagination.vue'
 export default {
   data () {
     return {

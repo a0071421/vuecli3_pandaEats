@@ -25,10 +25,6 @@
   </footer>
 </template>
 
-<style lang="scss" scoped>
-  .fixed-footer{}
-</style>
-
 <script>
 export default {}
 </script>

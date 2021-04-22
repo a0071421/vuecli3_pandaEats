@@ -3,7 +3,7 @@
     <nav
       class="navbar navbar-expand-md bg-primary navbar-light sticky-top flex-md-nowrap shadow"
     >
-      <button class="navbar-toggler bg-secondary p-1" type="button">
+      <button class="navbar-toggler bg-secondary p-1" type="button" @click="sidebarToggle">
         <span class="navbar-toggler-icon"></span>
       </button>
       <router-link class="navbar-brand" to="/"
@@ -33,18 +33,10 @@ export default {
   components: {
     Sidebar
   },
-  mounted () {
-    $(document).ready(() => {
-      $('.navbar-toggler').click(e => {
-        $('body').toggleClass('show')
-      })
-      const sidebar = $('.sidebar-sticky')
-      sidebar.click(e => {
-        if (e.target.className.indexOf('nav-link') !== -1) {
-          $('body').removeClass('show')
-        }
-      })
-    })
+  methods: {
+    sidebarToggle () {
+      $('body').toggleClass('show')
+    }
   }
 }
 </script>

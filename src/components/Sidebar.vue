@@ -8,17 +8,17 @@
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin">
+            <router-link class="nav-link" to="/admin" @click.native.prevent="closeSideBar">
               <i class="icon fas fa-cart-plus"></i> 產品管理</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/orders">
+            <router-link class="nav-link" to="/admin/orders" @click.native.prevent="closeSideBar">
               <i class="icon far fa-sticky-note"></i> 訂單管理</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/coupons">
+            <router-link class="nav-link" to="/admin/coupons" @click.native.prevent="closeSideBar">
               <i class="icon far fa-laugh-wink"></i> 優惠券管理</router-link
             >
           </li>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   data () {
     return {
@@ -50,6 +51,9 @@ export default {
         vm.isLoading = false
         vm.$router.push('/')
       })
+    },
+    closeSideBar () {
+      $('body').removeClass('show')
     }
   }
 }

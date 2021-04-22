@@ -88,9 +88,7 @@
                 disabled: item.category === '即將上市'
               }"
               class="card border-0 h-100 position-relative text-decoration-none"
-              @click="
-                item.category !== '即將上市' && getSpecifiedProduct(item.id)
-              "
+              @click="item.category !== '即將上市' && getSpecifiedProduct(item.id)"
             >
               <div
                 class="rounded-top bg-cover"
@@ -255,31 +253,6 @@ export default {
       vm.isLoading = false
       vm.status.addtoCart = ''
     },
-
-    /* addtoCart (id, qty = 1) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.status.addtoCart = id
-      vm.isLoading = true
-      const cart = {
-        product_id: id,
-        qty
-      }
-      // 新增之產品是否已在購物車內
-      const repeatedPd = vm.carts.carts.find(item => item.product_id === id)
-
-      // 新增之產品已在購物車內
-      if (typeof repeatedPd !== 'undefined') {
-        cart.qty += repeatedPd.qty
-        vm.removeCart(repeatedPd.id)
-      }
-
-      vm.$http.post(api, { data: { ...cart } }).then(response => {
-        const title = vm.products.find(item => item.id === id).title
-        vm.$bus.$emit('message:push', `已將 ${title} 加入購物車`, 'success')
-        vm.getCarts()
-      })
-    }, */
     removeCart (id) {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
