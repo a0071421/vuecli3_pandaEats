@@ -2,10 +2,6 @@
 .step {
   .step-item {
     background-color: theme-color('light');
-    display: none;
-    @include media-breakpoint-up(md) {
-      display: block;
-    }
     &.active {
       color: white;
       background-color: theme-color('primary');

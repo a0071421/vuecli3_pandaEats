@@ -118,7 +118,7 @@
         </div>
       </div>
     </div>
-    <div class="collapse navbar-collapse" id="navbarItem">
+    <div class="collapse navbar-collapse" id="navbarItem" data-toggle="collapse" data-target=".collapse.show">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link class="nav-link" to="/"
