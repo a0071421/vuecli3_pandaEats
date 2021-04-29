@@ -68,22 +68,9 @@
                     </div>
                   </td>
                   <td class="align-middle">
-                   <!--  <div class="input-group">
-                      <div class="input-group-prepend">
-                        <button class="btn btn-highlight" type="button" @click="changeCartTotal('minus', item)">
-                          <i class="fas fa-minus-circle"></i>
-                        </button>
-                      </div>
-                      <input type="text" class="quantity form-control text-center" v-model.number="item.qty" readonly/>
-                      <div class="input-group-append">
-                        <button class="btn btn-highlight" type="button" @click="changeCartTotal('plus', item)">
-                          <i class="fas fa-plus-circle"></i>
-                        </button>
-                      </div>
-                    </div> -->
                    <div class="form-group mb-0">
                     <select class="form-control form-control-sm" v-model.number="item.qty" @change="changePdNum(item, index)">
-                      <option v-for="i in 20" :key="i" :value="i">{{ i }}</option>
+                      <option v-for="i in item.qty - (item.qty % 10) + 20 " :key="i" :value="i">{{ i }}</option>
                     </select>
                   </div>
                   </td>
