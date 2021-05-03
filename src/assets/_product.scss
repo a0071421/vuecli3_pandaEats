@@ -1,3 +1,13 @@
+// product category
+.sticky-navbar {
+  position: static;
+  @include media-breakpoint-up(md) {
+    position: sticky;
+    top: 20px;
+    z-index: 1020;
+  }
+}
+
 // products
 
 .product {
@@ -7,7 +17,7 @@
 .card {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   &:hover {
-    box-shadow: 0px 10px 24px theme-color("secondary");
+    box-shadow: 0px 10px 24px theme-color('secondary');
   }
 }
 

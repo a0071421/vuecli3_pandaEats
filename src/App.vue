@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Alert from './components/AlertMessage.vue'
+import Alert from '@/components/AlertMessage.vue'
 import Footer from '@/components/Footer.vue'
 export default {
   components: {

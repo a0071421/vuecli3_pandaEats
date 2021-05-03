@@ -38,7 +38,6 @@
                   </a>
                 </div>
               </div>
-              <!-- <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span> -->
               <h5 class="card-title font-weight-bold text-ellipsis">
                 <a href="#">{{ item.title }}</a>
               </h5>

@@ -5,11 +5,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '*',
-    redirect: '/'
-  },
-
-  {
     path: '/',
     component: () => import('@/views/customer/Index.vue'),
     children: [
@@ -84,8 +79,11 @@ const routes = [
         meta: { requiresAuth: true }
       }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
-
 ]
 
 const router = new VueRouter({
